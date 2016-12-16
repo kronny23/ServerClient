@@ -39,4 +39,21 @@ public class ClientServerTest {
 
         assertTrue(contentFile.equals(gettedContent));
     }
+
+    @Test
+    public void siteTest() {
+        assertTrue(isCorrectContent(Client.getDocument("http://spbu.ru/")));
+    }
+
+    private boolean isCorrectContent(String content) {
+        System.out.println("Content is '" + content + "'");
+        if (content == null || content.isEmpty()) {
+            return false;
+        }
+        if (!content.contains("</html>")) {
+            return false;
+        }
+
+        return true;
+    }
 }

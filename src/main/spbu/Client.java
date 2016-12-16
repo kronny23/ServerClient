@@ -31,7 +31,7 @@ public class Client {
             System.out.println("In/out error is occurred");
             return null;
         }
-        output.write("GET " + URI + " HTTP/1.1\nHost: " + host);
+        output.write("GET " + URI + " HTTP/1.1\nHost: " + host + "\n\n");
         output.flush();
 
         if (input.hasNextLine()) {
