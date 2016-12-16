@@ -19,9 +19,11 @@ public class Client {
             return null;
         }
         System.out.println("Getting document '" + host + ":" + port + URI + "'...");
+        // BufferedReader input;
         Scanner input;
         PrintWriter output;
         try {
+            // input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             input = new Scanner(socket.getInputStream());
             output = new PrintWriter(socket.getOutputStream());
         } catch (IOException e) {
@@ -31,7 +33,8 @@ public class Client {
         }
         output.write("GET " + URI + " HTTP/1.1\nHost: " + host);
         output.flush();
-        if (input.hasNext()) {
+
+        if (input.hasNextLine()) {
             String startingLine = input.nextLine();
             String[] startingLineParts = startingLine.split(" ", 3);
             if (startingLineParts.length != 3) {
@@ -50,17 +53,17 @@ public class Client {
             return null;
         }
 
-        while (input.hasNext()) {
-            if (input.next().trim().isEmpty()) {
+        while (input.hasNextLine()) {
+            if (input.nextLine().isEmpty()) {
                 break;
             }
         }
         String content = "";
-        while (input.hasNext()) {
+        while (input.hasNextLine()) {
             if (!content.isEmpty()) {
                 content += "\n";
             }
-            content += input.next();
+            content += input.nextLine();
         }
         try {
             socket.close();
